@@ -1,0 +1,12 @@
+# Secrets and credentials
+*.pem
+*.key
+credentials.yml
+vault-password.txt
+
+# Local inventory and environment-specific settings
+inventory.ini
+
+# Temporary files
+*.retry
+*.log

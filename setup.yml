@@ -1,0 +1,10 @@
+---
+- name: Basic System Setup
+  hosts: web
+  become: true
+  tasks:
+    - name: Install the tree package
+      ansible.builtin.dnf:
+        name: tree
+        state: present
+
