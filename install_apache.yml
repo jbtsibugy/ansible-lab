@@ -1,0 +1,26 @@
+---
+
+- hosts: all
+  become: true 
+  tasks: 
+
+  - name: update repostiory index
+    dnf:
+     update_cache: yes 
+
+  - name: install httpd package
+    ansible.builtin.dnf:
+     name: httpd
+     state: latest
+  
+  - name: start httpd
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: yes
+
+
+  - name: add php support for httpd
+    dnf:
+      name: php
+      state: latest
