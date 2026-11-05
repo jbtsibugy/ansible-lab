@@ -1,0 +1,43 @@
+---
+
+- hosts: all
+  become: true 
+  pre_tasks: 
+
+
+  - name: install httpd and php packages
+    tags: httpd,php,RedHat
+    package:
+        name: 
+         - httpd
+         - php
+        state: latest
+        update_cache: yes
+    when: ansible_distribution == "RedHat" and ansible_distribution_version == "8.2"
+  
+
+- hosts: web_servers
+  tags: start-httpd
+  become: true 
+  tasks:
+
+
+  - name: start httpd
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "RedHat"
+
+
+      #installing php and httpd packages as variables. In the inventory file you would need to define each for each server(ex: 10.2.3 httpd_package=httpd php_package=php)
+#- name: install httpd and php packages
+#   package:
+#     name: 
+#- "{{httpd_package}}"
+          #       - "{{php_package}}"
+          #     state: latest
+          #update_cache: yes
+          # when: ansible_distribution == "RedHat" and ansible_distribution_version == "8.2"
+  
+

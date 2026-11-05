@@ -1,0 +1,35 @@
+#This is basically the install_apache file but without everything consolidated
+
+---
+
+- hosts: all
+  become: true 
+  tasks: 
+
+
+  - name: update cache
+    dnf: 
+     update_cache: yes
+    when: ansible_version == "RedHat"
+
+  - name: install httpd package
+    ansible.builtin.dnf:
+      name: 
+        - httpd
+        - php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "RedHat" and ansible_distribution_version == "8.2"
+  
+  - name: start httpd
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "RedHat"
+
+  - name: install php package
+    dnf:
+      name: php
+      state: latest
+    when: ansible_distribution == "RedHat"
